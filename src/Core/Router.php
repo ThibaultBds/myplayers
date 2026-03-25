@@ -5,6 +5,12 @@ namespace App\Core;
 class Router
 {
     private $routes = [];
+    private $db;
+
+    public function __construct($db)
+    {
+        $this->db = $db;
+    }
 
     public function addRoute($method, $uri, $controller, $action)
     {
@@ -23,7 +29,7 @@ class Router
 
         foreach ($this->routes as $route) {
             if ($route['method'] === $method && $route['uri'] === $uri) {
-                $controller = new $route['controller']();
+                $controller = new $route['controller']($this->db);
                 $action = $route['action'];
                 $controller->$action();
                 return;
