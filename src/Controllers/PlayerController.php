@@ -2,13 +2,15 @@
 
 namespace App\Controllers;
 
+use App\Core\Database;
+
 class PlayerController
 {
     private $db;
 
-    public function __construct($db)
+    public function __construct()
     {
-        $this->db = $db;
+        $this->db = Database::getInstance();
     }
 
     public function index()
