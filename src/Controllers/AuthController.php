@@ -21,12 +21,11 @@ class AuthController
 
         $userRepository = new UserRepository($this->db);
         $admin = $userRepository->findByEmail($email);
-        var_dump($admin);
 
         if ($admin && password_verify($password, $admin['password'])) {
             $_SESSION['user_id'] = $admin['id'];
             $_SESSION['role'] = $admin['role'];
-            header('Location :/admin');
+            header('Location: /admin');
             exit;
         } else {
             $error = 'Email ou mot de passe incorrect';
