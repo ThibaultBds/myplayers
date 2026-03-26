@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Database;
 use App\Repository\PlayerRepository;
+use App\Repository\TeamRepository;
 
 class AdminController
 {
@@ -34,5 +35,28 @@ class AdminController
         $playerRepository = new PlayerRepository($this->db);
         $players = $playerRepository->findAll();
         require_once __DIR__ . '/../Views/admin/players.php';
+    }
+
+    public function createPlayer()
+    {
+        $this->checkAuth();
+        $teamRepository = new TeamRepository($this->db);
+        $teams = $teamRepository->findAll();
+        require_once __DIR__ . '/../Views/admin/create-player.php';
+    }
+
+    public function storePlayer()
+    {
+        $this->checkAuth();
+        $first_name = $_POST['first_name'] ?? '';
+        $last_name = $_POST['last_name'] ?? '';
+        $position = $_POST['position'] ?? '';
+        $jersey_number = $_POST['jersey_number'] ?? '';
+        $team_id = $_POST['team_id'] ?? null;
+
+        $playerRepository = new PlayerRepository($this->db);
+        $playerRepository->create($first_name, $last_name, $position, $jersey_number, $team_id);
+        header('Location: /admin/players');
+        exit;
     }
 }

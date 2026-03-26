@@ -7,3 +7,5 @@ $router->addRoute('POST', '/login', 'App\Controllers\AuthController', 'login');
 $router->addRoute('GET', '/logout', 'App\Controllers\AuthController', 'logout');
 $router->addRoute('GET', '/admin', 'App\Controllers\AdminController', 'index');
 $router->addRoute('GET', '/admin/players', 'App\Controllers\AdminController', 'players');
+$router->addRoute('GET', '/admin/players/create', 'App\Controllers\AdminController', 'createPlayer');
+$router->addRoute('POST', '/admin/players/create', 'App\Controllers\AdminController', 'storePlayer');
