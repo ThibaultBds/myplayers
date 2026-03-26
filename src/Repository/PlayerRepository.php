@@ -1,18 +1,20 @@
 <?php
 
 namespace App\Repository;
-use PDO;
 
 class PlayerRepository
 {
-    private $db;
+    private $pdo;
 
     public function __construct($db)
     {
-        $this->db = $db;
+        $this->pdo = $db->getConnection();
     }
 
-    public function findAll() {
-        $stmt = $this->db->prepare("SELECT * FROM players ")
+    public function findAll()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM players");
+        $stmt->execute();
+        return $stmt->fetchAll();
     }
 }
