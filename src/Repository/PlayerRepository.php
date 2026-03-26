@@ -17,4 +17,11 @@ class PlayerRepository
         $stmt->execute();
         return $stmt->fetchAll();
     }
+
+    public function findById($id)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM players WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
 }

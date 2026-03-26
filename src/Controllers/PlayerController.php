@@ -20,4 +20,11 @@ class PlayerController
         $players = $playerRepository->findAll();
         require_once __DIR__ . '/../Views/players/index.php';
     }
+
+    public function show($id)
+    {
+        $playerRepository = new PlayerRepository($this->db);
+        $player = $playerRepository->findById($id);
+        require_once __DIR__ . '/../Views/players/show.php';
+    }
 }
