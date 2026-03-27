@@ -19,12 +19,13 @@ CREATE TABLE players
     FOREIGN KEY (team_id) REFERENCES teams(id)
 );
 
-CREATE TABLE games 
+CREATE TABLE games
 (
     id INT PRIMARY KEY AUTO_INCREMENT,
     player_id INT,
+    home_team_id INT,
+    away_team_id INT,
     date DATE NOT NULL,
-    opponent VARCHAR(255), 
     score_team INT,
     score_opponent INT,
     points INT NOT NULL,
@@ -32,7 +33,9 @@ CREATE TABLE games
     assists INT NOT NULL,
     minute_played INT NOT NULL,
 
-    FOREIGN KEY (player_id) REFERENCES players(id)
+    FOREIGN KEY (player_id) REFERENCES players(id),
+    FOREIGN KEY (home_team_id) REFERENCES teams(id),
+    FOREIGN KEY (away_team_id) REFERENCES teams(id)
 );
 
 CREATE TABLE users

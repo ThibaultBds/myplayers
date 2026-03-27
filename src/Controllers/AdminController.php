@@ -59,4 +59,38 @@ class AdminController
         header('Location: /admin/players');
         exit;
     }
+
+    public function deletePlayer($id)
+    {
+        $this->checkAuth();
+        $playerRepository = new PlayerRepository($this->db);
+        $playerRepository->delete($id);
+        header('Location: /admin/players');
+        exit;
+    }
+
+    public function editPlayer($id)
+    {
+        $this->checkAuth();
+        $playerRepository = new PlayerRepository($this->db);
+        $player = $playerRepository->findById($id);
+        $teamRepository = new TeamRepository($this->db);
+        $teams = $teamRepository->findAll();
+        require_once __DIR__ . '/../Views/admin/edit-player.php';
+    }
+
+    public function updatePlayer($id)
+    {
+        $this->checkAuth();
+        $first_name = $_POST['first_name'] ?? '';
+        $last_name = $_POST['last_name'] ?? '';
+        $position = $_POST['position'] ?? '';
+        $jersey_number = $_POST['jersey_number'] ?? '';
+        $team_id = $_POST['team_id'] ?? null;
+
+        $playerRepository = new PlayerRepository($this->db);
+        $playerRepository->update($id, $first_name, $last_name, $position, $jersey_number, $team_id);
+        header('Location: /admin/players');
+        exit;
+    }
 }

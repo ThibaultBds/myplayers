@@ -1,45 +1,56 @@
 version: "3.8"
 
-services: 
-  web: 
-    build: 
-      context: . 
+services:
+  web:
+    build:
+      context: .
       dockerfile: Dockerfile
     container_name: myplayers-web
-    ports: 
+    ports:
       - "8087:80"
-    volumes: 
-      - .:/var/www/html 
-    depends_on: 
-      - db 
-    environment: 
+    volumes:
+      - .:/var/www/html
+    depends_on:
+      - db
+    environment:
       - APACHE_DOCUMENT_ROOT=/var/www/html/public
     restart: always
-  
-  db: 
+    networks:
+      - myplayers-network
+
+  db:
     image: mysql:8.0
-    environment: 
+    container_name: myplayers-db
+    environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: myplayers
       MYSQL_USER: myplayers_user
       MYSQL_PASSWORD: myplayers_password
-    ports: 
+    ports:
       - "3309:3306"
-    volumes: 
+    volumes:
       - db_data:/var/lib/mysql
       - ./docker/mysql-init:/docker-entrypoint-initdb.d
-    
+    networks:
+      - myplayers-network
+
   phpmyadmin:
     image: phpmyadmin:latest
     container_name: myplayers-phpmyadmin
     restart: always
-    ports: 
+    ports:
       - "8088:80"
-    environment: 
+    environment:
       PMA_HOST: db
       PMA_PORT: 3306
-    depends_on: 
+    depends_on:
       - db
-    
+    networks:
+      - myplayers-network
+
 volumes:
   db_data:
+
+networks:
+  myplayers-network:
+    driver: bridge

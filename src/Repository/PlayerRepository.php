@@ -40,4 +40,32 @@ class PlayerRepository
             ':team_id' => $team_id
         ]);
     }
+
+    public function delete($id)
+    {
+        $stmt = $this->pdo->prepare("
+        DELETE FROM players
+        WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+    }
+
+    public function update($id, $first_name, $last_name, $position, $jersey_number, $team_id)
+    {
+        $stmt = $this->pdo->prepare("
+        UPDATE players
+        SET first_name = :first_name,
+            last_name = :last_name,
+            position = :position,
+            jersey_number = :jersey_number,
+            team_id = :team_id
+        WHERE id = :id");
+        $stmt->execute([
+            ':id' => $id,
+            ':first_name' => $first_name,
+            ':last_name' => $last_name,
+            ':position' => $position,
+            ':jersey_number' => $jersey_number,
+            ':team_id' => $team_id
+        ]);
+    }
 }
