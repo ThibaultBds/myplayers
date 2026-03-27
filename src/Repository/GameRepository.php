@@ -90,4 +90,15 @@ class GameRepository
             ':minute_played'  => $minute_played
         ]);
     }
+
+    public function findByPlayerId($id)
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT *
+        FROM games
+        WHERE player_id = :player_id
+        ORDER BY date DESC");
+        $stmt->execute([':player_id' => $id]);
+        return $stmt->fetchAll();
+    }
 }

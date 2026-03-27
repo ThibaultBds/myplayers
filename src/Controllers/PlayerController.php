@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Core\Database;
 use App\Repository\PlayerRepository;
+use App\Repository\GameRepository;
 
 class PlayerController
 {
@@ -25,6 +26,8 @@ class PlayerController
     {
         $playerRepository = new PlayerRepository($this->db);
         $player = $playerRepository->findById($id);
+        $gameRepository = new GameRepository($this->db);
+        $games = $gameRepository->findByPlayerId($id);
         require_once __DIR__ . '/../Views/players/show.php';
     }
 }
