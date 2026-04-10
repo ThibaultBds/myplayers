@@ -15,6 +15,10 @@
             <p class="text-gray-400 text-xs uppercase tracking-widest mb-2">Gestion</p>
             <h2 class="text-xl font-black uppercase group-hover:text-blue-400 transition">Matchs</h2>
         </a>
+        <a href="/admin/teams" class="bg-gray-800 border border-gray-700 hover:border-blue-500 rounded-2xl p-6 transition group">
+            <p class="text-gray-400 text-xs uppercase tracking-widest mb-2">Gestion</p>
+            <h2 class="text-xl font-black uppercase group-hover:text-blue-400 transition">Équipes</h2>
+        </a>
     </div>
 </section>
 

@@ -101,4 +101,29 @@ class GameRepository
         $stmt->execute([':player_id' => $id]);
         return $stmt->fetchAll();
     }
+
+    public function getTopScorers($limit = 5)
+    {
+        $stmt = $this->pdo->prepare("
+        SELECT p.id, p.first_name, p.last_name, p.position, p.jersey_number,
+               ROUND(AVG(g.points), 1) as ppg,
+               ROUND(AVG(g.rebounds), 1) as rpg,
+               ROUND(AVG(g.assists), 1) as apg,
+               COUNT(g.id) as games_played
+        FROM games g
+        JOIN players p ON g.player_id = p.id
+        GROUP BY p.id
+        ORDER BY ppg DESC
+        LIMIT :limit");
+        $stmt->bindValue(':limit', $limit, \PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    }
+
+    public function countAll()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as total FROM games");
+        $stmt->execute();
+        return $stmt->fetch()['total'];
+    }
 }

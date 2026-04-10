@@ -19,7 +19,7 @@ class Router
     public function dispatch()
     {
         $method = $_SERVER['REQUEST_METHOD'];
-        $uri = $_SERVER['REQUEST_URI'];
+        $uri = strtok($_SERVER['REQUEST_URI'], '?');
 
         foreach ($this->routes as $route) {
             if ($route['method'] !== $method) continue;
@@ -39,5 +39,8 @@ class Router
                 return;
             }
         }
+
+        http_response_code(404);
+        require_once __DIR__ . '/../../src/Views/errors/404.php';
     }
 }

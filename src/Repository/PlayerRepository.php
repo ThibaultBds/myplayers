@@ -18,6 +18,37 @@ class PlayerRepository
         return $stmt->fetchAll();
     }
 
+    public function countAll()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) as total FROM players");
+        $stmt->execute();
+        return $stmt->fetch()['total'];
+    }
+
+    public function search(string $q = '', string $position = '', int $team_id = 0)
+    {
+        $sql = "SELECT players.*, teams.name as team_name FROM players LEFT JOIN teams ON players.team_id = teams.id WHERE 1=1";
+        $params = [];
+
+        if ($q) {
+            $sql .= " AND (first_name LIKE :q OR last_name LIKE :q)";
+            $params[':q'] = '%' . $q . '%';
+        }
+        if ($position) {
+            $sql .= " AND position = :position";
+            $params[':position'] = $position;
+        }
+        if ($team_id) {
+            $sql .= " AND players.team_id = :team_id";
+            $params[':team_id'] = $team_id;
+        }
+
+        $sql .= " ORDER BY last_name ASC";
+        $stmt = $this->pdo->prepare($sql);
+        $stmt->execute($params);
+        return $stmt->fetchAll();
+    }
+
     public function findById($id)
     {
         $stmt = $this->pdo->prepare("SELECT * FROM players WHERE id = :id");

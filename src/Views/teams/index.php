@@ -24,10 +24,10 @@
         </div>
         <div class="grid grid-cols-4 gap-4">
             <?php foreach ($east as $team): ?>
-                <div class="bg-gray-800 border border-gray-700 hover:border-blue-500 rounded-2xl p-6 transition">
+                <a href="/teams/<?= $team['id'] ?>" class="bg-gray-800 border border-gray-700 hover:border-blue-500 rounded-2xl p-6 transition group">
                     <p class="text-gray-500 text-xs uppercase tracking-widest mb-2">Est</p>
-                    <p class="font-black text-xl uppercase"><?= htmlspecialchars($team['name']) ?></p>
-                </div>
+                    <p class="font-black text-xl uppercase group-hover:text-blue-400 transition"><?= htmlspecialchars($team['name']) ?></p>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>
@@ -41,10 +41,10 @@
         </div>
         <div class="grid grid-cols-4 gap-4">
             <?php foreach ($west as $team): ?>
-                <div class="bg-gray-800 border border-gray-700 hover:border-blue-500 rounded-2xl p-6 transition">
+                <a href="/teams/<?= $team['id'] ?>" class="bg-gray-800 border border-gray-700 hover:border-blue-500 rounded-2xl p-6 transition group">
                     <p class="text-gray-500 text-xs uppercase tracking-widest mb-2">Ouest</p>
-                    <p class="font-black text-xl uppercase"><?= htmlspecialchars($team['name']) ?></p>
-                </div>
+                    <p class="font-black text-xl uppercase group-hover:text-blue-400 transition"><?= htmlspecialchars($team['name']) ?></p>
+                </a>
             <?php endforeach; ?>
         </div>
     </div>
